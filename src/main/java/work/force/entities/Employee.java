@@ -1,9 +1,7 @@
 package work.force.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 public class Employee {
@@ -13,6 +11,8 @@ public class Employee {
 
     private String name;
     private Double salary;
+    @ManyToOne
+    private Departement departement;
 
     public Employee() {
     }
@@ -43,6 +43,14 @@ public class Employee {
         return salary;
     }
 
+    public Departement getDepartement() {
+        return departement;
+    }
+
+    public void setDepartement(Departement departement) {
+        this.departement = departement;
+    }
+
     public void setSalary(Double salary) {
         this.salary = salary;
     }
@@ -54,5 +62,12 @@ public class Employee {
                 ", name='" + name + '\'' +
                 ", salary=" + salary +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Employee employee)) return false;
+        return Objects.equals(name, employee.name) && Objects.equals(salary, employee.salary) && Objects.equals(departement, employee.departement);
     }
 }

@@ -1,9 +1,9 @@
 package work.force.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
+import java.util.Objects;
+
 @Entity
 public class Departement {
     @Id
@@ -11,6 +11,8 @@ public class Departement {
     private Long id;
 
     private String name;
+    @OneToMany
+    private List<Employee> employeeList;
 
     public Departement() {
     }
@@ -18,6 +20,14 @@ public class Departement {
     public Departement(Long id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public List<Employee> getEmployeeList() {
+        return employeeList;
+    }
+
+    public void setEmployeeList(List<Employee> employeeList) {
+        this.employeeList = employeeList;
     }
 
     public Long getId() {
@@ -42,5 +52,12 @@ public class Departement {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Departement that)) return false;
+        return Objects.equals(name, that.name) && Objects.equals(employeeList, that.employeeList);
     }
 }
